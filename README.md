@@ -18,3 +18,9 @@ List
 ## custom_php_ini
 
 php iniを追加するレシピ
+
+
+参考
+======
+
+https://support.cloud.engineyard.com/entries/22340268?locale=67
