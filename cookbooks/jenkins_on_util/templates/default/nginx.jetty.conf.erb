@@ -1,0 +1,10 @@
+server { 
+  listen default;
+  server_name <%= @public_host %>;
+  proxy_redirect off;
+  proxy_set_header  X-Real-IP  $remote_addr;
+  
+  location / {
+    proxy_pass <%= "http://#{@host}:8080" %>;
+  }
+}
