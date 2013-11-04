@@ -1,8 +1,10 @@
 About
 =======
 
-すごい小さい変更用のEngine Yard Cloudの設定を変更するクラウドクックブック
+A little cookbooks for Engine Yard Cloud
 
+
+### Prepare command line tool for uploading and applying cookbooks
 
 ```
 $gem install engineyard
@@ -11,45 +13,35 @@ $ey recipes upload
 $ey recipes apply 
 ```
 
-
-List
-======
-
-## custom_php_ini
-
-php iniを追加するレシピ
-
-How to work
-============
+### How to debug
 
 ```
 cookbooks/main/recipes/default.rb
 ```
 
-が最初に呼ばれる。そこからinclude_recipeされたディレクトリ以下のdefualt.rbが呼び出され実行される。
+When you do apply your custom cookbooks, EY instances run main/recipes/default.rb
+And your cookbooks and dns.json are placed at /etc/chef-custom/*
 
-サーバ上には以下にdns.json(node情報を格納したjson)とcookbooks/が配置されている。
-
-```
-/etc/chef-custom/
-```
-
-ログは以下
+You can see the logs at
 
 ```
 /var/log/chef.custom.log
 ```
 
-直にインスタンスに入って実行するには
+If you can run by yourself, you can use this command at a target instance
 
 ```
 sudo /usr/local/ey_resin/bin/chef-solo -j /etc/chef-custom/dna.json -c /etc/chef-custom/solo.rb
 ```
 
 
+List
+--------
 
+### custom_php_ini
 
-参考
-======
+add php.ini
 
-https://support.cloud.engineyard.com/entries/22340268?locale=67
+### jenkins_on_util
+
+install and run Jenkins at Util server
