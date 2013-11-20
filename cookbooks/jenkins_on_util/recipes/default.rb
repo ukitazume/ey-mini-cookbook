@@ -5,12 +5,17 @@ if @node[:instance_role] == 'util' and @node[:name].match(/jenkins/) then
 end
 
 if ['app_master','solo'].include? @node[:instance_role] then
+  port = case @node[:instance_role]
+  when 'solo' then 80
+  when 'app_master' then 81
+  end
   template "/etc/nginx/servers/jetty.conf" do
     owner 'root'
     group 'root'
     mode 600
     source "nginx.jetty.conf.erb"
     variables({
+      port: port,
       host: @node[:utility_instances].keep_if{|server| server['name'] =~ /jenkins/}.first['hostname'],
       public_host: @node[:jenkins][:public_host]
       })
