@@ -1,5 +1,5 @@
 if ['solo', 'app', 'app_master'].include?(node[:instance_role])
-      template "/etc/nginx//#{exe_env}-php5.4/ext-active/#{app_name}_custom.ini" do
+      template "/etc/nginx/#{exe_env}-php5.4/ext-active/#{app_name}_custom.ini" do
         owner node[:owner_name]
         group node[:owner_name]
         backup false
