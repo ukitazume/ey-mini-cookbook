@@ -14,7 +14,8 @@ if ['solo', 'app', 'app_master'].include?(node[:instance_role])
       end
     end
   end
-  service "php-fpm" do
-    action :restart
+
+  execute "restarat php-fpm" do
+    command "sudo monit restart all -g php-fpm"
   end
 end
