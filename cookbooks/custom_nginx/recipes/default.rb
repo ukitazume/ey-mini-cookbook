@@ -14,5 +14,5 @@ node[:applications].each do |app_name, _|
 end
 
 service "nginx" do
-  action :reload
+  action :restart
 end
