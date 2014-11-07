@@ -1,0 +1,81 @@
+USER=deploy
+GROUP=deploy
+FLUENT_CONFIG="/etc/fluentd/fluent.conf"
+DAEMON=/usr/local/bin/fluentd
+PIDFILE=/var/run/fluentd/fluent.pid
+LOGFILE=/var/log/fluentd.log
+DAEMON_ARGS="-c ${FLUENT_CONFIG} --daemon ${PIDFILE} --log ${LOGFILE}"
+
+
+do_start()
+{
+  /sbin/start-stop-daemon --start --pidfile ${PIDFILE} --exec ${DAEMON} -- ${DAEMON_ARGS} > ${LOGFILE} 2>&1
+}
+
+do_stop()
+{
+  /sbin/start-stop-daemon --stop --pidfile ${PIDFILE}  > ${LOGFILE} 2>&1
+}
+
+do_configtest()
+{
+  eval "${DAEMON} ${DAEMON_ARGS} --user ${USER} --group ${GROUP} --dry-run "
+}
+
+
+case "$1" in
+  start)
+    do_start
+    case "$?" in
+      0)
+        echo "Started fluentd"
+        ;;
+      1)
+        echo "already running"
+        ;;
+      *)
+        echo "Failed"
+        ;;
+    esac
+    ;;
+  stop)
+    do_stop
+    echo $?
+    case "$?" in
+      0|1)
+        echo "Stop fluentd"
+        ;;
+      *)
+        echo "Failed stopping"
+        ;;
+    esac
+    ;;
+  restart)
+    do_stop
+    case "$?" in
+      0|1)
+        do_start
+        case "$?" in
+          0)
+            echo "Started fluentd"
+            ;;
+          1)
+            echo "Still funning old process"
+            ;;
+          *)
+            echo "Failed"
+            ;;
+        esac
+        ;;
+      *)
+        echo "falid"
+        ;;
+    esac
+    ;;
+  configtest)
+    do_configtest
+    ;;
+  *)
+    echo "Usage (start|stop|restart)"
+    ;;
+esac
