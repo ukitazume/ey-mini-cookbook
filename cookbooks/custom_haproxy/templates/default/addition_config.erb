@@ -1,0 +1,6 @@
+# additional-config
+listen additional_1 :8080
+  mode tcp
+  <% @backends.each_with_index do |instance, i| %>
+    server app-<%= i %> <%= instance['private_hostname'] %>:8081 check inter 5000 fastinter 1000 fall 1 weight <%= (instance['role'] == 'app_master') ? @app_master_weight : 50 %> # <%= instance['id'] %>
+  <% end %>
