@@ -35,7 +35,7 @@ directory '/var/run/fluentd/' do
   group  'deploy'
   mode   0755
   action :create
-  notifies :action, "template[/etc/fluentd/fluent.conf]"
+  notifies :run, "template[/etc/fluentd/fluent.conf]"
 end
 
 file '/var/log/fluentd.log' do
