@@ -14,7 +14,18 @@ do_start()
 
 do_stop()
 {
-  /sbin/start-stop-daemon --stop --pidfile ${PIDFILE}  > ${LOGFILE} 2>&1
+  /sbin/start-stop-daemon --stop --retry=TERM/30/KILL/5 --pidfile ${PIDFILE}  > ${LOGFILE} 2>&1
+  RETVAL="$?"
+  [ "$RETVAL" = 2 ] && return 2
+  /sbin/start-stop-daemon --stop  --retry=0/30/KILL/5 --exec $DAEMON > ${LOGFILE} 2>&1
+  [ "$?" = 2 ] && return 2
+  rm -f $PIDFILE
+  return $RETVAL
+}
+
+do_reload()
+{
+  /sbin/start-stop-daemon --stop --pidfile ${PIDFILE} --signal SIGHUP > ${LOGFILE} 2>&1
 }
 
 do_configtest()
@@ -40,7 +51,6 @@ case "$1" in
     ;;
   stop)
     do_stop
-    echo $?
     case "$?" in
       0|1)
         echo "Stop fluentd"
@@ -49,6 +59,9 @@ case "$1" in
         echo "Failed stopping"
         ;;
     esac
+    ;;
+  reload)
+    do_reload
     ;;
   restart)
     do_stop
@@ -76,6 +89,6 @@ case "$1" in
     do_configtest
     ;;
   *)
-    echo "Usage (start|stop|restart)"
+    echo "Usage (start|stop|restart|configtest)"
     ;;
 esac

@@ -1,0 +1,5 @@
+check process fluentd
+with pidfile /var/run/fluentd/fluent.pid
+  start program = "/etc/init.d/fluentd start"
+  stop program = "/etc/init.d/fluentd stop"
+  group fluentd
