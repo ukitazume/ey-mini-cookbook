@@ -81,13 +81,20 @@ execute "plugin install" do
 end
 
 
-template "/data/monit.d/flunet.monitrc" do
+template "/data/monit.d/fluentd.monitrc" do
   owner 'root'
   group 'root'
   mode 0644
-  source "fluent.monitrc.erb"
+  source "fluentd.monitrc.erb"
+  notifies :run, "execute[monit reload]"
 end
 
 execute "monit reload" do
+  command "monit reload"
   action :run
+end
+
+execute "fluentd reload" do
+  command "monit restart fluentd"
+  user "root"
 end
