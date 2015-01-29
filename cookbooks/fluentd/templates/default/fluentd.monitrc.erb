@@ -1,0 +1,5 @@
+check process fluentd
+  with pidfile /var/run/fluentd/fluent.pid
+  start program = "/etc/init.d/fluentd start" as uid "deploy" and gid "deploy"
+  stop program = "/etc/init.d/fluentd stop" as uid "deploy" and gid "deploy"
+  group fluentd
