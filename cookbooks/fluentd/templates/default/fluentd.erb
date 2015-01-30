@@ -4,7 +4,8 @@ FLUENT_CONFIG="/etc/fluentd/fluent.conf"
 DAEMON=/usr/local/bin/fluentd
 PIDFILE=/var/run/fluentd/fluent.pid
 LOGFILE=/var/log/fluentd.log
-DAEMON_ARGS="-c ${FLUENT_CONFIG} --daemon ${PIDFILE} --log ${LOGFILE}"
+GEMFILE=/etc/fluentd/Gemfile
+DAEMON_ARGS="-c ${FLUENT_CONFIG} --daemon ${PIDFILE} --log ${LOGFILE} -g ${GEMFILE}"
 
 
 do_start()

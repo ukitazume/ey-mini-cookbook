@@ -1,6 +1,24 @@
 <source>
-  type forward
+  type tail
+  path /var/log/nginx/<YOUR APPNAME>.access.log
+  pos_file /tmp/fluntd-nginx.access.pos
+  format /^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^ ]*) +\S*)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)" "(?<forwarder>[^\"]*)")?/
+  time_format %d/%b/%Y:%H:%M:%S %z
+  tag nginx.access
 </source>
+
+<match nginx.**>
+  type s3
+
+  aws_key_id <YOUR KEY>
+  aws_sec_key <YOUR KEY>
+  s3_bucket <YOUR BACKET>
+  s3_region <YOUR Region: like ap-southeast-1>
+  buffer_path /tmp/fluentd-s3
+  path logs/
+  time_slice_format %Y%m%d-%H:%M
+  time_slice_wait 10m
+</match>
 
 ## built-in UNIX socket input
 #<source>
@@ -9,10 +27,10 @@
 
 # HTTP input
 # http://localhost:8888/<tag>?json=<json>
-<source>
-  type http
-  port 8888
-</source>
+#<source>
+#  type http
+#  port 8888
+#</source>
 
 ## File input
 ## read apache logs with tag=apache.access
@@ -27,17 +45,17 @@
 # http://localhost:24220/api/plugins
 # http://localhost:24220/api/plugins?type=TYPE
 # http://localhost:24220/api/plugins?tag=MYTAG
-<source>
-  type monitor_agent
-  port 24220
-</source>
+#<source>
+#  type monitor_agent
+#  port 24220
+#</source>
 
 # Listen DRb for debug
-<source>
-  type debug_agent
-  bind 127.0.0.1
-  port 24230
-</source>
+#<source>
+#  type debug_agent
+#  bind 127.0.0.1
+#  port 24230
+#</source>
 
 
 ## match tag=apache.access and write to file
@@ -47,22 +65,22 @@
 #</match>
 
 ## match tag=debug.** and dump to console
-<match debug.**>
-  type stdout
-</match>
+#<match debug.**>
+#  type stdout
+#</match>
 
 # match tag=system.** and forward to another fluent server
-<match system.**>
-  type forward
-  <server>
-    host 192.168.0.11
-  </server>
-  <secondary>
-    <server>
-      host 192.168.0.12
-    </server>
-  </secondary>
-</match>
+#<match system.**>
+#  type forward
+#  <server>
+#    host 192.168.0.11
+#  </server>
+#  <secondary>
+#    <server>
+#      host 192.168.0.12
+#    </server>
+#  </secondary>
+#</match>
 
 ## match tag=myapp.** and forward and write to file
 #<match myapp.**>

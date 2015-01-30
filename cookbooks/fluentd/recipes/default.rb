@@ -93,6 +93,6 @@ execute "monit reload" do
 end
 
 execute "fluentd reload" do
-  command "monit restart fluentd"
-  user "root"
+  command "/etc/init.d/fluentd restart"
+  user "deploy"
 end
