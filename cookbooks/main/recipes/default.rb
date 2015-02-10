@@ -2,4 +2,5 @@
 # include_recipe "jenkins_on_util"
 #include_recipe "fix_maintenance_nginx"
 # include_recipe "mongodb"
-include_recipe "fluentd"
+#include_recipe "fluentd"
+include_recipe "own_newrelic"
