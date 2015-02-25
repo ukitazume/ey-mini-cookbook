@@ -3,4 +3,5 @@
 #include_recipe "fix_maintenance_nginx"
 # include_recipe "mongodb"
 #include_recipe "fluentd"
-include_recipe "own_newrelic"
+# include_recipe "own_newrelic"
+include_recipe "goodname_newrelic"
