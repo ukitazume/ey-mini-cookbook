@@ -6,7 +6,8 @@ end
 execute 'add hostanme' do
   environment_name = node['environment']['name']
   instance_id = node['engineyard']['this']
-  hostname = "#{environment_name}/#{instance_id}"
+  instance_role = node['instance_role']
+  hostname = "#{environment_name}/#{instance_role}/#{instance_id}"
   command "echo 'hostname=#{hostname}' >> /etc/newrelic/nrsysmond.cfg"
   user "root"
 end
