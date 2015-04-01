@@ -4,4 +4,4 @@
 # include_recipe "mongodb"
 #include_recipe "fluentd"
 # include_recipe "own_newrelic"
-include_recipe "goodname_newrelic"
+include_recipe "nodejs"
