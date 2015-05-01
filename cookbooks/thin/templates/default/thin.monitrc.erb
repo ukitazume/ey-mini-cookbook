@@ -1,0 +1,7 @@
+<% @ports.each do |port| %>
+  check process thin_<%= @app %>_<%= port %>
+  with pidfile /var/run/engineyard/<%= @app %>/thin.<%= port %>.pid
+  start program = "/usr/bin/env PORT=<%= port %> /engineyard/bin/app_<%= @app %> start" as uid <%= @username %> and gid <%= @username %>
+  stop program = "/usr/bin/env PORT=<%= port %> /engineyard/bin/app_<%= @app %> stop" as uid <%= @username %> and gid <%= @username %>
+  group thin_<%= @app %>
+<% end %>

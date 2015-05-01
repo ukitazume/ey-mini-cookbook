@@ -1,0 +1,45 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          rails
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      S 0 1 6
+# Short-Description: rails initscript
+### END INIT INFO
+
+# Original author: Forrest Robertson
+
+# Do NOT "set -e"
+
+APP_PATH="/data/<%= @app_name %>/current"
+DAEMON=$APP_PATH/ey_bundler_binstubs/thin
+
+CONFIG_PATH="config/thin.yml"
+
+# Exit if the package is not installed
+[ -x "$DAEMON" ] || exit 0
+
+cd $APP_PATH
+
+case "$1" in
+  start)
+    $DAEMON start -C $CONFIG_PATH
+    ;;
+  stop)
+    $DAEMON stop -C $CONFIG_PATH
+    ;;
+  restart)
+    $DAEMON restart -C $CONFIG_PATH
+    ;;
+  deploy)
+    $DAEMON restart -C $CONFIG_PATH
+    ;;
+  *)
+    echo "Usage: $SCRIPT_NAME {start|stop|restart}" >&2
+    exit 3
+    ;;
+esac
+
+
+
