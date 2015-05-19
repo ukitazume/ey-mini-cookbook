@@ -1,8 +1,9 @@
+php_version = '5.4'
 if ['solo', 'app', 'app_master'].include?(node[:instance_role])
   node['applications'].each do |app|
     app_name = app.first
     [:cli, :fpm].each do |exe_env|
-      template "/etc/php/#{exe_env}-php5.4/ext-active/#{app_name}_custom.ini" do
+      template "/etc/php/#{exe_env}-php#{php_version}/ext-active/#{app_name}_custom.ini" do
         owner node[:owner_name]
         group node[:owner_name]
         backup false
