@@ -1,0 +1,24 @@
+case "$1" in
+  status)
+  exit 0
+  ;;
+start)
+  exit 0
+  ;;
+stop)
+  exit 0
+  ;;
+reload)
+  exit 0
+  ;;
+deploy)
+  exit 0
+  ;;
+restart)
+  exit 0
+  ;;
+*)
+  echo "Usage: the script doesn't work. see /etc/chef-custom/cookbooks/kill_god"
+  exit 1
+  ;;
+esac
