@@ -1,6 +1,7 @@
 execute "remove-god-from-inittab" do
   command "sed -i '/^god:.*/d' /etc/inittab"
 end
+
 execute "remove-god0-from-inittab" do
   command "sed -i '/^god0:.*/d' /etc/inittab"
 end
@@ -12,6 +13,11 @@ end
 execute "kill god" do
   command "killall ruby19"
   only_if 'ps aux | grep ruby19 | grep -v grep'
+end
+
+execute "kill node" do
+  command "killall node || echo 'nothinig'"
+  not_if "ps -p $(ps -p $(pgrep -f node) -o ppid=) | grep PM2"
 end
 
 node[:applications].each do |app_name, _|
@@ -26,5 +32,4 @@ node[:applications].each do |app_name, _|
     })
   end
 end
-
 
