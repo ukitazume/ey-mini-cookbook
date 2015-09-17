@@ -8,7 +8,7 @@ This recipe makes your enviornment
 
 ### How to use
 
-Only add the line, `include_recipes "modern_cphier_nginx"`,  on `cookbooks/main/recipes/default.rb"
+Only add the line, `include_recipe "modern_cipher_nginx"`,  on `cookbooks/main/recipes/default.rb"
 
 
 ### What to do this recipe
