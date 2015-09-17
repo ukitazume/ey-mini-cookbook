@@ -1,4 +1,4 @@
-yourkey = "789852443cc9bd38bb3589d8050104d0671995d2"
+yourkey = "your new key"
 execute 'replace license key' do
   command "cp /etc/newrelic/nrsysmond.cfg /etc/newrelic/nrsysmond.cfg.old && sed 's/license_key=.*$/license_key=#{yourkey}/' /etc/newrelic/nrsysmond.cfg.old > /etc/newrelic/nrsysmond.cfg"
   user "root"
