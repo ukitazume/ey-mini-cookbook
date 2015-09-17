@@ -4,4 +4,7 @@
 # include_recipe "mongodb"
 #include_recipe "fluentd"
 # include_recipe "own_newrelic"
-include_recipe "nodejs"
+#include_recipe "nodejs"
+#include_recipe "kill_god"
+#include_recipe "pm2"
+include_recipe "modern_cipher_nginx"
