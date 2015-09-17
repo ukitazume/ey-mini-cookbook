@@ -9,6 +9,7 @@ node[:applications].each do |app_name, _|
       variables({
         :app_name => app_name
       })
+      notifies :reload, "service[nginx]"
     end
   end
 end
