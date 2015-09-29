@@ -45,3 +45,7 @@ add php.ini
 ### jenkins_on_util
 
 install and run Jenkins at Util server
+
+### thin
+
+use thin for web app
